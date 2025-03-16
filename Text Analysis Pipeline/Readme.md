@@ -1,6 +1,6 @@
-📌 # Conversational AI Text Processing Pipeline
+ # Conversational AI Text Processing Pipeline
 
-🚀 ## Overview
+ ## Overview
 
   Welcome to Conversational AI Text Processing Pipeline (CHAT SCRIBE), a powerful and modular NLP application built using LangGraph. This project provides an end-to-end solution for analyzing text input through three key stages:
   
