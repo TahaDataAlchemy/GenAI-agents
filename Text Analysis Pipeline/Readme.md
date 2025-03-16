@@ -13,7 +13,7 @@
   This workflow demonstrates the power of LangGraph in building structured, extensible, and efficient NLP applications. By the end of this tutorial, you'll have a deep understanding of how to construct a graph-based NLP pipeline that can be customized or expanded for 
   various use cases.
 
-🛠 # Features
+# 🛠  Features
 
 
   ✅ Automated Text Classification – Classifies input text into meaningful categories.
@@ -28,7 +28,7 @@
   
   ✅ Document Download API – Users can download analysis results in a structured document format.
 
-🔧 # How It Works
+# 🔧  How It Works
 
     1️⃣ User Input: The user submits a text query.
     
@@ -43,13 +43,13 @@
     
     4️⃣ Download Feature: Users can download the processed output as a document.
 
-📌 # API Endpoint
+# 📌  API Endpoint
 
     The system interacts with the following API endpoint:
     
     Endpoint: http://127.0.0.1:8000/process_text
 
-📥 # Installation & Setup
+# 📥 Installation & Setup
 
     git clone : https://github.com/TahaDataAlchemy/GenAI-agents.git
     
