@@ -1,35 +1,46 @@
 import streamlit as st
 import requests
-import json
+from docx import Document
 
-def get_response(user_input):
-    url = "http://127.0.0.1:8000/process_text"
-    payload = {"text": user_input}
-    headers = {"Content-Type": "application/json"}
-    
-    response = requests.post(url, data=json.dumps(payload), headers=headers)
-    
-    if response.status_code == 200:
-        return response.json()
-    else:
-        return {"error": f"API Error: {response.status_code}"}
+# FastAPI endpoints
+TEXT_PROCESS_API = "http://127.0.0.1:8000/process_text"
+DOWNLOAD_API = "http://127.0.0.1:8000/download_report"
 
-# Streamlit UI
-st.title("Conversational Bot")
+st.title("ChatScribe 🤖")
 
-user_input = st.text_area("Enter your query:")
+# User input field
+user_input = st.text_area("Enter your text:")
 
-if st.button("Submit"):
-    if user_input.strip():
+if st.button("Analyze Text"):
+    if user_input:
         with st.spinner("Processing..."):
-            response = get_response(user_input)
-        
-        if "error" in response:
-            st.error(response["error"])
-        else:
-            st.subheader("Response:")
-            st.write("**Classification:**", response.get("classification", "N/A"))
-            st.write("**Entities:**", ", ".join(response.get("entities", [])))
-            st.write("**Summary:**", response.get("summary", "N/A"))
+            response = requests.post(TEXT_PROCESS_API, json={"text": user_input})
+            if response.status_code == 200:
+                data = response.json()
+                
+                # Display results
+                st.subheader("Analysis Results:")
+                st.write(f"**Classification:** {data.get('classification', 'N/A')}")
+                st.write(f"**Entities:** {', '.join(data.get('entities', []))}")
+                st.write(f"**Summary:** {data.get('summary', 'N/A')}")
+
+                # Create DOCX report
+                doc = Document()
+                doc.add_heading("Text Analysis Report", level=1)
+                doc.add_paragraph(f"**Classification:** {data.get('classification', 'N/A')}")
+                doc.add_paragraph(f"**Entities:** {', '.join(data.get('entities', []))}")
+                doc.add_paragraph(f"**Summary:** {data.get('summary', 'N/A')}")
+                
+                # Save file
+                report_path = "analysis_report.docx"
+                doc.save(report_path)
+
+                # Download Button
+                with open(report_path, "rb") as file:
+                    st.download_button("Download Report 📄", file, file_name="Text_Analysis_Report.docx")
+
+            else:
+                st.error(f"Error: {response.status_code} - {response.text}")
     else:
-        st.warning("Please enter a query.")
+        st.warning("Please enter some text!")
+

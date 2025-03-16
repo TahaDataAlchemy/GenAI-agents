@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import textProcessing
+from routers import downloadingDocs
 
 # Create the FastAPI app
 app = FastAPI()
@@ -20,7 +21,7 @@ app.add_middleware(
 
 # Include the text processing router
 app.include_router(textProcessing.router)
-
+app.include_router(downloadingDocs.router)
 
 @app.get("/")
 def read_root():
