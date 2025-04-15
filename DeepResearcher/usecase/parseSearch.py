@@ -1,18 +1,19 @@
-from typing import List
-def parse_search_results(results_string: str) -> List[dict]:
-    """Parse a string representation of search results into a list of dictionaries."""
-    results = []
-    entries = results_string.split(', snippet: ')
-    for entry in entries[1:]:  # Skip the first split as it's empty
-        parts = entry.split(', title: ')
-        if len(parts) == 2:
-            snippet = parts[0]
-            title_link = parts[1].split(', link: ')
-            if len(title_link) == 2:
-                title, link = title_link
-                results.append({
-                    'snippet': snippet,
-                    'title': title,
-                    'link': link
-                })
-    return results
+import requests
+from bs4 import BeautifulSoup
+import traceback
+def extract_full_text(url: str) -> str:
+    try:
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.get(url, headers=headers, timeout=10)
+        soup = BeautifulSoup(response.content, "html.parser")
+
+        # Remove scripts/styles
+        for tag in soup(["script", "style", "noscript"]):
+            tag.decompose()
+
+        # Extract main text
+        paragraphs = soup.find_all("p")
+        return "\n".join(p.get_text(strip=True) for p in paragraphs if p.get_text(strip=True))
+    except Exception as e:
+        error_details = traceback.format_exc()
+        return f"Failed to extract text: {e}\nTraceback:\n{error_details}"
