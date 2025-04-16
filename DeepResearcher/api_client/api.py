@@ -1,9 +1,9 @@
 import os
 import groq
-from config import settings
+from app.config import settings
 
 # Set the environment variable for Groq API key
-os.environ["GROQ_API_KEY"] = settings.Groq_api_key
+os.environ["GROQ_API_KEY"] = settings.GROQ_API_KEY
 
 # Initialize Groq client
 client = groq.Client()

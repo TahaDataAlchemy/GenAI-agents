@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    Groq_api_key:str
+    GROQ_API_KEY:str
 
 
     class Config:
