@@ -39,4 +39,5 @@ if __name__ == "__main__":
         """Agent for summarizing agent """
         Summary = summarize_Search_agent(results)
         print(Summary)
+        print("\n")
         print("_______________________________________________________________________________________________________________________________________________")
