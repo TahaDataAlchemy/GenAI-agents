@@ -5,12 +5,14 @@ from app.usecase.WebsiteCorrector import websiteNameCorrection
 from app.usecase.QueryDecomposer import query_decomposer
 import sys
 import os
+import pprint
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 if __name__ == "__main__":
     """ Inputs """
     query = "How to deploy fastapi on AWS and tell me about AWS compatibility with deployment frameworks"
+    
     link = None
 
     """Correcting the name of website if not written properly"""
@@ -24,8 +26,12 @@ if __name__ == "__main__":
 
 
     """ Finding Query on Internet"""
+    #appending result into dictionary so it can be summarized with key value pair 
+
+    all_results = {}
     for sub_query in sub_queries:
         results = duckduckgo_web_search(sub_query, site,max_results)
+        all_results[sub_query] = results 
         for idx, r in enumerate(results, 1):
             print(f"{idx}. {r['title']}")
             print(f"Link: {r['link']}")
@@ -36,8 +42,11 @@ if __name__ == "__main__":
         related_Question = generate_related_questions(query)
         print(related_Question)
 
-        """Agent for summarizing agent """
-        Summary = summarize_Search_agent(results)
-        print(Summary)
-        print("\n")
         print("_______________________________________________________________________________________________________________________________________________")
+
+    
+    """Agent for summarizing agent """
+    pprint.pprint(all_results)
+    Summary = summarize_Search_agent(all_results)
+    print(Summary)
+    print("\n")
