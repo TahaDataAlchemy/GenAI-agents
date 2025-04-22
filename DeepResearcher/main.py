@@ -41,12 +41,11 @@ if __name__ == "__main__":
         """Generating Related Question"""
         related_Question = generate_related_questions(query)
         print(related_Question)
-
         print("_______________________________________________________________________________________________________________________________________________")
 
     
     """Agent for summarizing agent """
-    pprint.pprint(all_results)
+    pprint.pprint(all_results) #use for pretty print
     Summary = summarize_Search_agent(all_results)
     print(Summary)
     print("\n")
