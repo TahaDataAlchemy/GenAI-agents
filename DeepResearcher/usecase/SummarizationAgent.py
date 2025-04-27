@@ -38,6 +38,7 @@ def summarize_Search_agent(all_query_results: dict) -> str:
         "  • At the end of each section, recommend the most relevant link.\n"
         "- If an error is encountered (e.g., empty content or missing data), write: 404\n"
         "- Maintain clarity, structure, and usefulness in your summaries.\n\n"
+        "Dont give any unnessacary info stricly follow the instruction mentioned to you dont need any suggestion or links and dont repeat yourselve just one time give result for each query"
         f"{results_json}"
     )
 

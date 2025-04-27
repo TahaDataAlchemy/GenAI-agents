@@ -6,14 +6,15 @@ class AgentMemory:
         self.client = MongoClient(db_uri)
         self.collection = self.client[db_name][collection_name]
     
-    def add(self,query,summary,related_questions,relevent_link):
+    def add(self,query,related_questions,relevent_link,UserProvidedLink,summary):
         self.collection.insert_one(
             {
                 "query":query,
-                "summary":summary,
+                "UserProvidedLink":UserProvidedLink,
                 "related_question":related_questions,
                 "relevent_link":relevent_link,
-                "timestamp":datetime.utcnow()
+                "timestamp":datetime.utcnow(),
+                "summary":summary
             }
         )
     def get_all(self):
